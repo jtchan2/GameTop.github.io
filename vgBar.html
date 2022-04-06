@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var canvasWidth=700;
+    var canvasHeight=700;
+    var margin= 200;
+    var svg = d3.select("body").append("svg")
+        .attr("width",  canvasWidth)
+        .attr("height", canvasHeight)
+    var width = svg.attr("width") - margin;
+    var height = svg.attr("height") - margin;
+    var xScale= d3.scaleBand().range([0,width]).padding(0.4);
+    var yScale= d3.scaleLinear().range([height,0]);
+    const format= d3.format("$.2s");
+    var games_data = [];
+    var profit_data = [];
+    var top10_data=[];
+    var stored10_data=[];
+    var container_g = svg.append("g")
+        .attr("transform",
+            "translate(" + 100 + ", " + 100 + ")");
+
+    d3.csv("vgsales.csv").then(data=>{
+        console.log(data);
+        data.forEach(item=>{
+            games_data.push(item);
+            profit_data.push(+item.Global_Sales);
+        })
+        var temp=d3.maxIndex(profit_data,function(d){
+            return d;
+        })
+        for(let i=0; i<10; i++){
+            var temp=d3.maxIndex(profit_data,function(d){
+                return d;
+            })
+            top10_data.push(games_data[temp]);
+            profit_data[temp]=-1;
+        }
+        xScale.domain(top10_data.map(function(d){
+            return d.Name;
+        }));
+        yScale.domain([0, d3.max(top10_data, function(d){
+            return +d.Global_Sales;
+        })]);
+
+        container_g.selectAll(".bar").data(top10_data).enter().append("rect").attr("class", "bar")
+            .attr("x", function (d){
+                //sets x position of rectangle for a specific year
+                return xScale(d.Name);
+            })
+            .attr("y", function(d){
+                //places y point which corresponds to data of given year
+                return yScale(+d.Global_Sales);
+            })
+            .attr("width", xScale.bandwidth())
+            //creates the length of the bar from y data point to bottem of graph
+            .attr("height", function(d){
+                return height - yScale(+d.Global_Sales);
+            }).attr("fill", "coral").append("title").text(function(d){
+            return "Game: "+d.Name+"\n Sales: $" +d.Global_Sales +" Million";
+        })
+        container_g.append("g")
+            .attr("transform", "translate(0, " + height + ")")
+            .call(d3.axisBottom(xScale).tickFormat(function(d){
+                return d.substring(0, 3).toUpperCase();
+            }))
+            .append("text")
+            .attr("y", 50)
+            .attr("x", 250)
+            .attr("stroke", "black")
+            .text("Games")
+        container_g.append("g")
+            .call(d3.axisLeft(yScale).tickFormat(function(d) {
+                return format(d)+"Mil";
+            }).ticks(10))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -20)
+            .attr("x", -200)
+            .attr("dy", "-5.1em")
+            .attr("stroke", "black")
+            .text("Game Sales")
+        console.log(top10_data)
+        console.log(temp)
+        console.log(profit_data[temp]);
+        console.log(games_data[temp])
+        console.log(games_data)
+        console.log(profit_data)
+    })
+</script>
+
+</body>
+</html>
