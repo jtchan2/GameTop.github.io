@@ -1,0 +1,22 @@
+Name,Platform,Year,Genre,Publisher,NA_Sales,EU_Sales,JP_Sales,Other_Sales,Global_Sales,parent
+EU_Sales,,,,,,,,,,
+Wii Sports,Wii,2006,Sports,Nintendo,41.49,29.02,3.77,8.46,82.74,EU_Sales
+Mario Kart Wii,Wii,2008,Racing,Nintendo,15.85,12.88,3.79,3.31,35.82,EU_Sales
+Wii Sports Resort,Wii,2009,Sports,Nintendo,15.75,11.01,3.28,2.96,33,EU_Sales
+Nintendogs,DS,2005,Simulation,Nintendo,9.07,11,1.93,2.75,24.76,EU_Sales
+Grand Theft Auto V,PS3,2013,Action,Take-Two Interactive,7.01,9.27,0.97,4.14,21.4,EU_Sales
+Brain Age: Train Your Brain in Minutes a Day,DS,2005,Misc,Nintendo,4.75,9.26,4.16,2.05,20.22,EU_Sales
+New Super Mario Bros.,DS,2006,Platform,Nintendo,11.38,9.23,6.5,2.9,30.01,EU_Sales
+Wii Play,Wii,2006,Misc,Nintendo,14.03,9.2,2.93,2.85,29.02,EU_Sales
+Pokemon Red/Pokemon Blue,GB,1996,Role-Playing,Nintendo,11.27,8.89,10.22,1,31.37,EU_Sales
+Wii Fit Plus,Wii,2009,Sports,Nintendo,9.09,8.59,2.53,1.79,22,EU_Sales
+Wii Fit,Wii,2007,Sports,Nintendo,8.94,8.03,3.6,2.15,22.72,EU_Sales
+Mario Kart DS,DS,2005,Racing,Nintendo,9.81,7.57,4.13,1.92,23.42,EU_Sales
+New Super Mario Bros. Wii,Wii,2009,Platform,Nintendo,14.59,7.06,4.7,2.26,28.62,EU_Sales
+The Sims 3,PC,2009,Simulation,Electronic Arts,0.98,6.42,0,0.71,8.11,EU_Sales
+World of Warcraft,PC,2004,Role-Playing,Activision,0.07,6.21,0,0,6.28,EU_Sales
+Pokemon Gold/Pokemon Silver,GB,1999,Role-Playing,Nintendo,9,6.18,7.2,0.71,23.1,EU_Sales
+FIFA 16,PS4,2015,Sports,Electronic Arts,1.11,6.06,0.06,1.26,8.49,EU_Sales
+Call of Duty: Black Ops II,PS3,2012,Shooter,Activision,4.99,5.88,0.65,2.52,14.03,EU_Sales
+Call of Duty: Modern Warfare 3,PS3,2011,Shooter,Activision,5.54,5.82,0.49,1.62,13.46,EU_Sales
+Call of Duty: Black Ops 3,PS4,2015,Shooter,Activision,5.77,5.81,0.35,2.31,14.24,EU_Sales
