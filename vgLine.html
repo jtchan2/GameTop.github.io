@@ -10,7 +10,7 @@
     var canvasWidth=700;
     var canvasHeight=700;
     var margin= 200;
-    var colors=["rgb(33, 118, 43)","rgb(231, 47, 68)","rgb(27, 107, 240)","rgb(240, 198, 15)","rgb(192, 71, 197)","rgb(215, 119, 130)","rgb(43, 220, 194)","rgb(111, 57, 20)","rgb(229, 175, 122)","rgb(38, 31, 34)","coral","marron"]
+    var colors=["rgb(33, 118, 43)","rgb(231, 47, 68)","rgb(27, 107, 240)","rgb(240, 198, 15)","rgb(192, 71, 197)","rgb(215, 119, 130)","rgb(43, 220, 194)","rgb(111, 57, 20)","rgb(229, 175, 122)","rgb(38, 31, 34)","coral","maroon"]
     var svg = d3.select("body").append("svg")
         .attr("width",  canvasWidth)
         .attr("height", canvasHeight)
@@ -29,14 +29,14 @@
     var platform_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var racing_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var roleplay_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var puzzle_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
-    var misc_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
-    var shooter_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
-    var sim_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
-    var action_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
-    var fighting_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
-    var adventure_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
-    var strategy_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];;
+    var puzzle_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var misc_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var shooter_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var sim_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var action_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var fighting_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var adventure_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var strategy_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     d3.csv("vgsales.csv").then(data=>{
         data.forEach(game=>{
             genre_data.add(game.Genre)
@@ -149,22 +149,6 @@
                 }
             }
         })
-        /*
-        console.log(genre_data)
-        console.log(sports_data)
-        console.log(platform_data)
-        console.log(racing_data)
-        console.log((roleplay_data))
-        console.log((puzzle_data))
-        console.log(misc_data)
-        console.log((shooter_data))
-        console.log(sim_data)
-        console.log(action_data)
-        console.log(fighting_data)
-        console.log((adventure_data))
-        console.log(strategy_data)
-
-         */
         var tSport_data=[]
         var tplat_data=[]
         var trace_data=[]
@@ -179,7 +163,6 @@
         var tstrat_data=[]
         var datefina="31/12/2016"
         datefina=d3.timeParse("%m/%d/%Y")(datefina)
-        //d3.timeParse("%m/%d/%Y")(date+years_data[i])
         for(let i=0; i<years_data.length-2; i++){
             tSport_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:sports_data[i]})
             tplat_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:platform_data[i]})
@@ -260,6 +243,30 @@
                     return yScale(d.sales);
                 }))
         }
+        svg.append("rect").attr("x", 70).attr("y", 630).attr("width", 10).attr("height",10).attr("fill", colors[0]);
+        svg.append("rect").attr("x", 70).attr("y", 650).attr("width", 10).attr("height",10).attr("fill", colors[1]);
+        svg.append("rect").attr("x", 70).attr("y", 670).attr("width", 10).attr("height",10).attr("fill", colors[2]);
+        svg.append("rect").attr("x", 70).attr("y", 690).attr("width", 10).attr("height",10).attr("fill", colors[3]);
+        svg.append("rect").attr("x", 140).attr("y", 630).attr("width", 10).attr("height",10).attr("fill", colors[4]);
+        svg.append("rect").attr("x", 140).attr("y", 650).attr("width", 10).attr("height",10).attr("fill", colors[5]);
+        svg.append("rect").attr("x", 140).attr("y", 670).attr("width", 10).attr("height",10).attr("fill", colors[6]);
+        svg.append("rect").attr("x", 140).attr("y", 690).attr("width", 10).attr("height",10).attr("fill", colors[7]);
+        svg.append("rect").attr("x", 210).attr("y", 630).attr("width", 10).attr("height",10).attr("fill", colors[8]);
+        svg.append("rect").attr("x", 210).attr("y", 650).attr("width", 10).attr("height",10).attr("fill", colors[9]);
+        svg.append("rect").attr("x", 210).attr("y", 670).attr("width", 10).attr("height",10).attr("fill", colors[10]);
+        svg.append("rect").attr("x", 210).attr("y", 690).attr("width", 10).attr("height",10).attr("fill", colors[11]);
+        svg.append("text").attr("x",85).attr("y", 639).attr("stroke", "black").attr("font-size", 15).text("Sports");
+        svg.append("text").attr("x",85).attr("y", 659).attr("stroke", "black").attr("font-size", 15).text("Platform");
+        svg.append("text").attr("x",85).attr("y", 679).attr("stroke", "black").attr("font-size", 15).text("Racing");
+        svg.append("text").attr("x",85).attr("y", 699).attr("stroke", "black").attr("font-size", 15).text("RP");
+        svg.append("text").attr("x",155).attr("y", 639).attr("stroke", "black").attr("font-size", 15).text("Puzzle");
+        svg.append("text").attr("x",155).attr("y", 659).attr("stroke", "black").attr("font-size", 15).text("Misc");
+        svg.append("text").attr("x",155).attr("y", 679).attr("stroke", "black").attr("font-size", 15).text("Shooter");
+        svg.append("text").attr("x",155).attr("y", 699).attr("stroke", "black").attr("font-size", 15).text("Sim");
+        svg.append("text").attr("x",225).attr("y", 639).attr("stroke", "black").attr("font-size", 15).text("Action");
+        svg.append("text").attr("x",225).attr("y", 659).attr("stroke", "black").attr("font-size", 15).text("Adventure");
+        svg.append("text").attr("x",225).attr("y", 679).attr("stroke", "black").attr("font-size", 15).text("Fighting");
+        svg.append("text").attr("x",225).attr("y", 699).attr("stroke", "black").attr("font-size", 15).text("Strategy");
     })
 </script>
 
