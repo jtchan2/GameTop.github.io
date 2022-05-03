@@ -25,18 +25,7 @@
     const format= d3.format("$.2s");
     var genre_data= new Set();
     var years_data= new Set();
-    var sports_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var platform_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var racing_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var roleplay_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var puzzle_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var misc_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var shooter_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var sim_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var action_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var fighting_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var adventure_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    var strategy_data= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var total2=[];
     d3.csv("vgsales.csv").then(data=>{
         data.forEach(game=>{
             genre_data.add(game.Genre)
@@ -46,154 +35,41 @@
 
         })
         years_data= Array.from(years_data).sort();
-        data.forEach(item=>{
-            //console.log(years_data[0])
-            if(item.Genre=="Sports"){
-                for(let i=0; i<years_data.length; i++){
-                    //console.log(item.Year==years_data[i])
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        sports_data[i]= temp+sports_data[i];
-                        //console.log(sports_data[i])
-                    }
-                }
-            }
-            if(item.Genre=="Platform"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        platform_data[i]= temp+platform_data[i];
-                    }
-                }
-            }
-            if(item.Genre=="Racing"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        racing_data[i]= temp+racing_data[i];
-                    }
-                }
-            }
-            if(item.Genre=="Role-Playing"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        roleplay_data[i]= temp+roleplay_data[i];
-                    }
-                }
-            }
+        console.log(years_data)
+        console.log(genre_data)
 
-            if(item.Genre=="Puzzle"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        puzzle_data[i]= temp+puzzle_data[i];
-                    }
-                }
-            }
+        genre_data.forEach(genre=>{
 
-            if(item.Genre=="Misc"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        misc_data[i]= temp+misc_data[i];
+            var array= new Array(years_data.length)
+            for(let i=0; i<array.length; i++){
+                array[i]=0
+            }
+            data.forEach(item=>{
+                if(item.Genre==genre){
+                    for(let i=0; i<years_data.length; i++){
+                        if(item.Year==years_data[i]){
+                            array[i]= (+item.Global_Sales)+array[i]
+                        }
                     }
                 }
+            })
+            //console.log(genre)
+            //console.log(array)
+            var tgenre= [];
+            for(let i=0; i<years_data.length; i++){
+                tgenre.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:array[i], id:genre})
             }
-            if(item.Genre=="Shooter"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        shooter_data[i]= temp+shooter_data[i];
-                    }
-                }
-            }
-            if(item.Genre=="Simulation"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        sim_data[i]= temp+sim_data[i];
-                    }
-                }
-            }
-            if(item.Genre=="Action"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        action_data[i]= temp+action_data[i];
-                    }
-                }
-            }
-            if(item.Genre=="Fighting"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        fighting_data[i]= temp+fighting_data[i];
-                    }
-                }
-            }
-            if(item.Genre=="Adventure"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        adventure_data[i]= temp+adventure_data[i];
-                    }
-                }
-            }
-            if(item.Genre=="Strategy"){
-                for(let i=0; i<years_data.length; i++){
-                    if(item.Year==years_data[i]){
-                        let temp= +item.Global_Sales
-                        strategy_data[i]= temp+strategy_data[i];
-                    }
-                }
-            }
+            //console.log(tgenre)
+            total2.push(tgenre);
+            //console.log(total2)
         })
-        var tSport_data=[]
-        var tplat_data=[]
-        var trace_data=[]
-        var trole_data=[]
-        var tpuzz_data=[]
-        var tmisc_data=[]
-        var tshooter_data=[]
-        var tsim_data=[]
-        var taction_data=[]
-        var tfight_data=[]
-        var tadventure_data=[]
-        var tstrat_data=[]
-        var datefina="31/12/2016"
-        datefina=d3.timeParse("%m/%d/%Y")(datefina)
-        for(let i=0; i<years_data.length-2; i++){
-            tSport_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:sports_data[i]})
-            tplat_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:platform_data[i]})
-            trace_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:racing_data[i]})
-            trole_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:roleplay_data[i]})
-            tpuzz_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:puzzle_data[i]})
-            tmisc_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:misc_data[i]})
-            tshooter_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:shooter_data[i]})
-            tsim_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:sim_data[i]})
-            taction_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:action_data[i]})
-            tfight_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:fighting_data[i]})
-            tadventure_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:adventure_data[i]})
-            tstrat_data.push({year:d3.timeParse("%m/%d/%Y")(date+years_data[i]),sales:strategy_data[i]})
-        }
-        console.log(tSport_data)
-        console.log(tplat_data)
-        console.log(trace_data)
-        console.log(trole_data)
-        console.log(tshooter_data)
-        console.log(tsim_data)
-        console.log(tadventure_data)
-        var total=[tSport_data,tplat_data,trace_data,trole_data,tpuzz_data,tmisc_data,tshooter_data,tsim_data,taction_data,tadventure_data,tfight_data,tstrat_data]
-        console.log(total)
-        //Below Works
-        //console.log(date+years_data[0])
-        xScale.domain(d3.extent(tSport_data, function(d){
+        console.log(total2[0][0].id)
+        xScale.domain(d3.extent(total2[0], function(d){
             return d.year;
         }))
         var maxval=0;
-        for(let i=0; i<total.length; i++){
-            let tempval=d3.max(total[i],function(d){
+        for(let i=0; i<total2.length; i++){
+            let tempval=d3.max(total2[i],function(d){
                 return d.sales;
             })
             if(tempval>maxval){
@@ -201,7 +77,6 @@
             }
         }
         yScale.domain([0,maxval])
-        console.log(colors)
         container_g.append("g")
             .attr("transform", "translate(0, " + height + ")")
             .call(d3.axisBottom(xScale))
@@ -221,19 +96,19 @@
             .attr("dy", "-5.1em")
             .attr("stroke", "black")
             .text("Millions in Sales")
-        container_g.append("path").datum(tSport_data)
-            .attr("fill", "none")
-            .attr("stroke", "coral")
-            .attr("stroke-width",2)
-            .attr("d",d3.line().x(function(d){
-                return xScale(d.year);
-            }).y(function(d){
-                return yScale(d.sales);
-            }))
-
-        //TODO CREATE LINES
-        for(let run=0; run<total.length; run++){
-            container_g.append("path").datum(total[run])
+        for(let run=0; run<total2.length; run++){
+            container_g.append("path").datum(total2[run])
+                .attr("fill", "none")
+                .attr("stroke", "coral")
+                .attr("stroke-width",2)
+                .attr("d",d3.line().x(function(d){
+                    return xScale(d.year);
+                }).y(function(d){
+                    return yScale(d.sales);
+                })).attr("id",total2[run][0].id)
+        }
+        for(let run=0; run<total2.length; run++){
+            container_g.append("path").datum(total2[run])
                 .attr("fill", "none")
                 .attr("stroke", colors[run])
                 .attr("stroke-width",2)
@@ -241,7 +116,8 @@
                     return xScale(d.year);
                 }).y(function(d){
                     return yScale(d.sales);
-                }))
+                })).attr("id",total2[run][0].id)
+
         }
         svg.append("rect").attr("x", 70).attr("y", 630).attr("width", 10).attr("height",10).attr("fill", colors[0]);
         svg.append("rect").attr("x", 70).attr("y", 650).attr("width", 10).attr("height",10).attr("fill", colors[1]);
