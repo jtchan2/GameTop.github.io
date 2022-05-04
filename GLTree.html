@@ -1,121 +1,108 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v6.js"></script>
-
-<!-- Create a div where the graph will take place -->
-<h2>Global Sales TreeMap</h2>
-<div id="GL_Tree"></div>
-<h2>North America Game Sales Tree Map</h2>
-<div id="NA_Tree"></div>
-<h2>Europe Game Sales Tree Map</h2>
-<div id="EU_Tree"></div>
-<h2>Japan Game Sales Tree Map</h2>
-<div id="JP_Tree"></div>
-
-
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <title>TreeMaps of Game Sales Per Region</title>
+    <style>
+        .tooltip {
+            position: absolute;
+            text-align: left;
+            width: auto;
+            height: auto;
+            padding: 5px;
+            font: 12px;
+            background: white;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+            visibility: hidden;
+        }
+        .bar:hover {
+            fill: Brown;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%; display: table;">
+    <div style="display: table-row; height: 100px;">
+        <div style="width: 50%; display: table-cell;" id="GL_Tree">
+            <h2>Global Sales Tree Map</h2>
+        </div>
+        <div style="display: table-cell;" id="NA_Tree">
+            <h2>North America Game Sales Tree Map</h2>
+        </div>
+    </div>
+</div>
+<div style="width: 100%; display: table;">
+    <div style="display: table-row; height: 100px;">
+        <div style="width: 50%; display: table-cell;" id="EU_Tree">
+            <h2>Europe Game Sales Tree Map</h2>
+        </div>
+        <div style="display: table-cell;" id="JP_Tree">
+            <h2>Japan Game Sales Tree Map</h2>
+        </div>
+    </div>
+</div>
 <script>
 
-  // set the dimensions and margins of the graph
-  const margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 445 - margin.left - margin.right,
-    height = 445 - margin.top - margin.bottom;
+    // set the dimensions and margins of the graph
+    const margin = {top: 10, right: 10, bottom: 10, left: 10},
+        width = 445 - margin.left - margin.right,
+        height = 445 - margin.top - margin.bottom;
 
-  // append the svg object to the body of the page
-  const svgG = d3.select("#GL_Tree")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          `translate(${margin.left}, ${margin.top})`);
-  const svgN = d3.select("#NA_Tree")
-          .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform",
-                  `translate(${margin.left}, ${margin.top})`);
-  const svgE = d3.select("#EU_Tree")
-          .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform",
-                  `translate(${margin.left}, ${margin.top})`);
-  const svgJ = d3.select("#JP_Tree")
-          .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform",
-                  `translate(${margin.left}, ${margin.top})`);
-  
-  // Read data
-  d3.csv('GL_Salesvgsales.csv').then(function(data) {
-  
-    // stratify the data: reformatting for d3.js
-    const root = d3.stratify()
-      .id(function(d) { return d.Name; })   // Name of the entity (column name is name in csv)
-      .parentId(function(d) { 
-        
-        return d.parent; })   // Name of the parent (column name is parent in csv)
-      (data);
-    root.sum(function(d) { return +d.Global_Sales })   // Compute the numeric value for each entity
-  
-    // Then d3.treemap computes the position of each element of the hierarchy
-    // The coordinates are added to the root object above
-    d3.treemap()
-      .size([width, height])
-      .padding(4)
-      (root)
-  
-    // use this information to add rectangles:
-    svgG.selectAll("rect")
-      .data(root.leaves())
-      .join("rect")
-        .attr('x', function (d) { return d.x0; })
-        .attr('y', function (d) { return d.y0; })
-        .attr('width', function (d) { return d.x1 - d.x0; })
-        .attr('height', function (d) { return d.y1 - d.y0; })
-        .style("stroke", "black")
-        .style("fill", "#69b3a2").append("title").text(function(d){
-      return "Game: "+d.data.Name+"\n Sales: $" +d.data.Global_Sales +" Million\n Year Published: " +d.data.Year;
-    });
-  
-    // and to add the text labels
-    svgG.selectAll("text")
-      .data(root.leaves())
-      .join("text")
-        .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
-        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-        .text(function(d){ return d.data.Name.substring(0, 4)})
-        .attr("font-size", "15px")
-        .attr("fill", "white")
-  })
-  d3.csv('NA_Salesvgsales.csv').then(function(data) {
+    // append the svg object to the body of the page
+    const svgG = d3.select("#GL_Tree")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            `translate(${margin.left}, ${margin.top})`);
+    const svgN = d3.select("#NA_Tree")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            `translate(${margin.left}, ${margin.top})`);
+    const svgE = d3.select("#EU_Tree")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            `translate(${margin.left}, ${margin.top})`);
+    const svgJ = d3.select("#JP_Tree")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            `translate(${margin.left}, ${margin.top})`);
+    var tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-    // stratify the data: reformatting for d3.js
-    const root = d3.stratify()
+    // Read data
+    d3.csv('GL_Salesvgsales.csv').then(function(data) {
+
+        // stratify the data: reformatting for d3.js
+        const root = d3.stratify()
             .id(function(d) { return d.Name; })   // Name of the entity (column name is name in csv)
             .parentId(function(d) {
 
-              return d.parent; })   // Name of the parent (column name is parent in csv)
+                return d.parent; })   // Name of the parent (column name is parent in csv)
             (data);
-    root.sum(function(d) { return +d.NA_Sales })   // Compute the numeric value for each entity
+        root.sum(function(d) { return +d.Global_Sales })   // Compute the numeric value for each entity
 
-    // Then d3.treemap computes the position of each element of the hierarchy
-    // The coordinates are added to the root object above
-    d3.treemap()
+        // Then d3.treemap computes the position of each element of the hierarchy
+        // The coordinates are added to the root object above
+        d3.treemap()
             .size([width, height])
             .padding(4)
             (root)
 
-    // use this information to add rectangles:
-    svgN
-            .selectAll("rect")
+        // use this information to add rectangles:
+        svgG.selectAll("rect")
             .data(root.leaves())
             .join("rect")
             .attr('x', function (d) { return d.x0; })
@@ -123,42 +110,57 @@
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
             .style("stroke", "black")
-            .style("fill", "#93CAED").append("title").text(function(d){
-      return "Game: "+d.data.Name+"\n Sales: $" +d.data.NA_Sales +" Million\n Year Published: " +d.data.Year;
-    });
-
-    // and to add the text labels
-    svgN
-            .selectAll("text")
+            .style("fill", "#69b3a2").on("mouseover", function(elem, data) {
+            tooltip
+                .style("visibility", "visible")
+                .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Sales: $"+data.data.Global_Sales +" Million</li>"+
+                    "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
+        })
+            .on("mousemove", function(elem, data) {
+                tooltip
+                    .style("top", (event.pageY - 20) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.style("visibility", "hidden");
+            })
+        let count=1
+        // and to add the text labels
+        svgG.selectAll("text")
             .data(root.leaves())
             .join("text")
             .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
             .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-            .text(function(d){ return d.data.Name.substring(0, 3)})
-            .attr("font-size", "15px")
+            .text(function(d){ return (count++)+". "+d.data.Name.substring(0,4)})
+            .attr("font-size", "12px")
             .attr("fill", "white")
-  })
+        let desc="";
+        let count2=1;
+        for(let i=0; i<root.leaves().length; i++){
+            desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+        }
+        d3.select("#GL_Tree").data(root.leaves()).append("ol").html(desc)
+    })
+    d3.csv('NA_Salesvgsales.csv').then(function(data) {
 
-  d3.csv('EU_Salesvgsales.csv').then(function(data) {
-
-    // stratify the data: reformatting for d3.js
-    const root = d3.stratify()
+        // stratify the data: reformatting for d3.js
+        const root = d3.stratify()
             .id(function(d) { return d.Name; })   // Name of the entity (column name is name in csv)
             .parentId(function(d) {
 
-              return d.parent; })   // Name of the parent (column name is parent in csv)
+                return d.parent; })   // Name of the parent (column name is parent in csv)
             (data);
-    root.sum(function(d) { return +d.EU_Sales })   // Compute the numeric value for each entity
+        root.sum(function(d) { return +d.NA_Sales })   // Compute the numeric value for each entity
 
-    // Then d3.treemap computes the position of each element of the hierarchy
-    // The coordinates are added to the root object above
-    d3.treemap()
+        // Then d3.treemap computes the position of each element of the hierarchy
+        // The coordinates are added to the root object above
+        d3.treemap()
             .size([width, height])
             .padding(4)
             (root)
 
-    // use this information to add rectangles:
-    svgE
+        // use this information to add rectangles:
+        svgN
             .selectAll("rect")
             .data(root.leaves())
             .join("rect")
@@ -167,64 +169,164 @@
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
             .style("stroke", "black")
-            .style("fill", "#EEEE9B").append("title").text(function(d){
-      return "Game: "+d.data.Name+"\n Sales: $" +d.data.EU_Sales +" Million\n Year Published: " +d.data.Year;
-    });
+            .style("fill", "#93CAED").on("mouseover", function(elem, data) {
+            tooltip
+                .style("visibility", "visible")
+                .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Sales: $"+data.data.NA_Sales +" Million</li>"+
+                    "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
+        })
+            .on("mousemove", function(elem, data) {
+                tooltip
+                    .style("top", (event.pageY - 20) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.style("visibility", "hidden");
+            })
 
-    // and to add the text labels
-    svgE
+        // and to add the text labels
+        let count=1
+        svgN
             .selectAll("text")
             .data(root.leaves())
             .join("text")
             .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
             .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-            .text(function(d){ return d.data.Name.substring(0, 3)})
-            .attr("font-size", "15px")
-            .attr("fill", "grey")
-  })
-
-  d3.csv('JP_Salesvgsales.csv').then(function(data) {
-
-    // stratify the data: reformatting for d3.js
-    const root = d3.stratify()
-            .id(function(d) { return d.Name; })   // Name of the entity (column name is name in csv)
-            .parentId(function(d) {
-
-              return d.parent; })   // Name of the parent (column name is parent in csv)
-            (data);
-    root.sum(function(d) { return +d.JP_Sales })   // Compute the numeric value for each entity
-
-    // Then d3.treemap computes the position of each element of the hierarchy
-    // The coordinates are added to the root object above
-    d3.treemap()
-            .size([width, height])
-            .padding(4)
-            (root)
-
-    // use this information to add rectangles:
-    svgJ
-            .selectAll("rect")
-            .data(root.leaves())
-            .join("rect")
-            .attr('x', function (d) { return d.x0; })
-            .attr('y', function (d) { return d.y0; })
-            .attr('width', function (d) { return d.x1 - d.x0; })
-            .attr('height', function (d) { return d.y1 - d.y0; })
-            .style("stroke", "black")
-            .style("fill", "#F47174").append("title").text(function(d){
-      return "Game: "+d.data.Name+"\n Sales: $" +d.data.JP_Sales +" Million\n Year Published: " +d.data.Year;
-    });
-
-    // and to add the text labels
-    svgJ
-            .selectAll("text")
-            .data(root.leaves())
-            .join("text")
-            .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
-            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-            .text(function(d){ return d.data.Name.substring(0, 3)})
-            .attr("font-size", "15px")
+            .text(function(d){ return (count++)+". "+d.data.Name.substring(0,4)})
+            .attr("font-size", "10px")
             .attr("fill", "white")
-  })
+        let desc="";
+        let count2=1;
+        for(let i=0; i<root.leaves().length; i++){
+            desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+        }
+        d3.select("#NA_Tree").data(root.leaves()).append("ol").html(desc)
+    })
 
-  </script>
+    d3.csv('EU_Salesvgsales.csv').then(function(data) {
+
+        // stratify the data: reformatting for d3.js
+        const root = d3.stratify()
+            .id(function(d) { return d.Name; })   // Name of the entity (column name is name in csv)
+            .parentId(function(d) {
+
+                return d.parent; })   // Name of the parent (column name is parent in csv)
+            (data);
+        root.sum(function(d) { return +d.EU_Sales })   // Compute the numeric value for each entity
+
+        // Then d3.treemap computes the position of each element of the hierarchy
+        // The coordinates are added to the root object above
+        d3.treemap()
+            .size([width, height])
+            .padding(4)
+            (root)
+
+        // use this information to add rectangles:
+        svgE
+            .selectAll("rect")
+            .data(root.leaves())
+            .join("rect")
+            .attr('x', function (d) { return d.x0; })
+            .attr('y', function (d) { return d.y0; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
+            .attr('height', function (d) { return d.y1 - d.y0; })
+            .style("stroke", "black")
+            .style("fill", "#EEEE9B").on("mouseover", function(elem, data) {
+            tooltip
+                .style("visibility", "visible")
+                .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Sales: $"+data.data.EU_Sales +" Million</li>"+
+                    "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
+        })
+            .on("mousemove", function(elem, data) {
+                tooltip
+                    .style("top", (event.pageY - 20) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.style("visibility", "hidden");
+            })
+
+        // and to add the text labels
+        let count=1
+        svgE
+            .selectAll("text")
+            .data(root.leaves())
+            .join("text")
+            .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
+            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+            .text(function(d){ return (count++)+". "+d.data.Name.substring(0,4)})
+            .attr("font-size", "10px")
+            .attr("fill", "black")
+        let desc="";
+        let count2=1;
+        for(let i=0; i<root.leaves().length; i++){
+            desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+        }
+        d3.select("#EU_Tree").data(root.leaves()).append("ol").html(desc)
+    })
+
+    d3.csv('JP_Salesvgsales.csv').then(function(data) {
+
+        // stratify the data: reformatting for d3.js
+        const root = d3.stratify()
+            .id(function(d) { return d.Name; })   // Name of the entity (column name is name in csv)
+            .parentId(function(d) {
+
+                return d.parent; })   // Name of the parent (column name is parent in csv)
+            (data);
+        root.sum(function(d) { return +d.JP_Sales })   // Compute the numeric value for each entity
+
+        // Then d3.treemap computes the position of each element of the hierarchy
+        // The coordinates are added to the root object above
+        d3.treemap()
+            .size([width, height])
+            .padding(4)
+            (root)
+
+        // use this information to add rectangles:
+        svgJ
+            .selectAll("rect")
+            .data(root.leaves())
+            .join("rect")
+            .attr('x', function (d) { return d.x0; })
+            .attr('y', function (d) { return d.y0; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
+            .attr('height', function (d) { return d.y1 - d.y0; })
+            .style("stroke", "black")
+            .style("fill", "#F47174").on("mouseover", function(elem, data) {
+            tooltip
+                .style("visibility", "visible")
+                .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Sales: $"+data.data.JP_Sales +" Million</li>"+
+                    "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
+        })
+            .on("mousemove", function(elem, data) {
+                tooltip
+                    .style("top", (event.pageY - 20) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.style("visibility", "hidden");
+            })
+
+        // and to add the text labels
+        let count=1
+        svgJ
+            .selectAll("text")
+            .data(root.leaves())
+            .join("text")
+            .attr("x", function(d){ return d.x0+10})    // +10 to adjust position (more right)
+            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+            .text(function(d){ return (count++)+". "+d.data.Name.substring(0,4)})
+            .attr("font-size", "11px")
+            .attr("fill", "white")
+        let desc="";
+        let count2=1;
+        for(let i=0; i<root.leaves().length; i++){
+            desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+        }
+        d3.select("#JP_Tree").data(root.leaves()).append("ol").html(desc)
+    })
+</script>
+
+</body>
+</html>
