@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <title>Title</title>
+    <style>
+        .tooltip {
+            position: absolute;
+            text-align: left;
+            width: auto;
+            height: auto;
+            padding: 5px;
+            font: 12px;
+            background: white;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+            visibility: hidden;
+        }
+        .bar:hover {
+            fill: Blue;
+        }
+    </style>
 </head>
 <body>
 <script>
@@ -25,6 +43,7 @@
     var container_g = svg.append("g")
         .attr("transform",
             "translate(" + 100 + ", " + 100 + ")");
+    var tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
     d3.csv("vgsales.csv").then(data=>{
         console.log(data);
@@ -62,13 +81,27 @@
             //creates the length of the bar from y data point to bottem of graph
             .attr("height", function(d){
                 return height - yScale(+d.Global_Sales);
-            }).attr("fill", "coral").append("title").text(function(d){
-            return "Game: "+d.Name+"\n Sales: $" +d.Global_Sales +" Million";
+            }).attr("fill", "coral").on("mouseover", function(elem, data) {
+                console.log(elem)
+            console.log(data.Name)
+            tooltip
+                .style("visibility", "visible")
+                .html("<ul>"+"<li> Game: "+data.Name +"</li>"+"<li> Sales: $"+data.Global_Sales +" Million</li>"+
+                    "<li> Year Published: "+data.Year +"</li>"+"<li> Genre: "+data.Genre +"</li>"+"</ul>")
         })
+            .on("mousemove", function(elem, data) {
+                tooltip
+                    .style("top", (event.pageY - 20) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.style("visibility", "hidden");
+            })
+        let count=1;
         container_g.append("g")
             .attr("transform", "translate(0, " + height + ")")
             .call(d3.axisBottom(xScale).tickFormat(function(d){
-                return d.substring(0, 3).toUpperCase();
+                return count+". "+d.substring(0, 3).toUpperCase();
             }))
             .append("text")
             .attr("y", 50)
@@ -86,12 +119,13 @@
             .attr("dy", "-5.1em")
             .attr("stroke", "black")
             .text("Game Sales")
-        console.log(top10_data)
-        console.log(temp)
-        console.log(profit_data[temp]);
-        console.log(games_data[temp])
-        console.log(games_data)
-        console.log(profit_data)
+       
+        let desc=""
+        for(let i=0; i<top10_data.length;i++){
+            desc+="<li> Game: "+top10_data[i].Name+"</li>"
+        }
+        d3.select("body").append("ol").html(desc)
+
     })
 </script>
 
