@@ -1,0 +1,22 @@
+Name,Platform,Year,Genre,Publisher,NA_Sales,EU_Sales,JP_Sales,Other_Sales,Global_Sales,parent
+JP_Sales,,,,,,,,,,
+Pokemon Red/Pokemon Blue,GB,1996,Role-Playing,Nintendo,11.27,8.89,10.22,1,31.37,JP_Sales
+Pokemon Gold/Pokemon Silver,GB,1999,Role-Playing,Nintendo,9,6.18,7.2,0.71,23.1,JP_Sales
+Super Mario Bros.,NES,1985,Platform,Nintendo,29.08,3.58,6.81,0.77,40.24,JP_Sales
+New Super Mario Bros.,DS,2006,Platform,Nintendo,11.38,9.23,6.5,2.9,30.01,JP_Sales
+Pokemon Diamond/Pokemon Pearl,DS,2006,Role-Playing,Nintendo,6.42,4.52,6.04,1.37,18.36,JP_Sales
+Pokemon Black/Pokemon White,DS,2010,Role-Playing,Nintendo,5.57,3.28,5.65,0.82,15.32,JP_Sales
+Pokemon Ruby/Pokemon Sapphire,GBA,2002,Role-Playing,Nintendo,6.06,3.9,5.38,0.5,15.85,JP_Sales
+Animal Crossing: Wild World,DS,2005,Simulation,Nintendo,2.55,3.52,5.33,0.88,12.27,JP_Sales
+Brain Age 2: More Training in Minutes a Day,DS,2005,Puzzle,Nintendo,3.44,5.36,5.32,1.18,15.3,JP_Sales
+Monster Hunter Freedom 3,PSP,2010,Role-Playing,Capcom,0,0,4.87,0,4.87,JP_Sales
+New Super Mario Bros. Wii,Wii,2009,Platform,Nintendo,14.59,7.06,4.7,2.26,28.62,JP_Sales
+Animal Crossing: New Leaf,3DS,2012,Simulation,Nintendo,2.01,2.32,4.36,0.41,9.09,JP_Sales
+Dragon Quest IX: Sentinels of the Starry Skies,DS,2009,Role-Playing,Nintendo,0.66,0.69,4.35,0.15,5.84,JP_Sales
+Pokemon X/Pokemon Y,3DS,2013,Role-Playing,Nintendo,5.17,4.05,4.34,0.79,14.35,JP_Sales
+Tetris,GB,1989,Puzzle,Nintendo,23.2,2.26,4.22,0.58,30.26,JP_Sales
+Super Mario Land,GB,1989,Platform,Nintendo,10.83,2.71,4.18,0.42,18.14,JP_Sales
+Brain Age: Train Your Brain in Minutes a Day,DS,2005,Misc,Nintendo,4.75,9.26,4.16,2.05,20.22,JP_Sales
+Mario Kart DS,DS,2005,Racing,Nintendo,9.81,7.57,4.13,1.92,23.42,JP_Sales
+Monster Hunter Freedom Unite,PSP,2008,Role-Playing,Capcom,0.47,0.57,4.13,0.34,5.5,JP_Sales
+Dragon Quest VII: Warriors of Eden,PS,2000,Role-Playing,Enix Corporation,0.2,0.14,4.1,0.02,4.47,JP_Sales
