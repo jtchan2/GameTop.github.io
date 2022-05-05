@@ -86,7 +86,7 @@
             console.log(data.Name)
             tooltip
                 .style("visibility", "visible")
-                .html("<ul>"+"<li> Game: "+data.Name +"</li>"+"<li> Sales: $"+data.Global_Sales +" Million</li>"+
+                .html("<ul>"+"<li> Game: "+data.Name +"</li>"+"<li> Copies Sold: "+data.Global_Sales +" Million</li>"+
                     "<li> Year Published: "+data.Year +"</li>"+"<li> Genre: "+data.Genre +"</li>"+"</ul>")
         })
             .on("mousemove", function(elem, data) {
