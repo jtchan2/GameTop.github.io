@@ -57,13 +57,6 @@
         .attr("height", canvasHeight)
     var width = svg.attr("width") - margin;
     var height = svg.attr("height") - margin;
-  //adds title of graph to chart
-    svg.append("text")
-        .attr("transform", "translate(100, 0)")
-        .attr("x", 85)
-        .attr("y", 50)
-        .attr("font-size", "24px")
-        .text("Eggnog & Buttermilk Fluid Sales 2000-2017")
 //creates scaling for x and y axis 
     var xScale= d3.scaleLinear().range([0,width]);
     var yScale= d3.scaleLinear().range([height,0]);
