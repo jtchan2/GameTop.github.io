@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .tooltip {
+      position: absolute;
+      text-align: left;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      font: 12px;
+      background: white;
+      -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+      -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+      visibility: hidden;
+    }
+    .cir:hover {
+      fill: Black;
+    }
+  </style>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>D3 Scatter Plot</title>
+</head>
+<body>
+    <div style="width: 100%; display: table;">
+        <div style="display: table-row; height: 100px;">
+          <div style="width: 50%; display: table-cell;" id="NA_Tree">
+            <h2>North America Vs. Global</h2>
+          </div>
+          <div style="display: table-cell;" id="EU_Tree">
+            <h2>Europe Vs. Global Sales</h2>
+          </div>
+        </div>
+      </div>
+      <div style="width: 100%; display: table;">
+        <div style="display: table-row; height: 100px;">
+          <div style="width: 50%; display: table-cell;" id="JP_Tree">
+            <h2>Japan Vs. Global Sales</h2>
+          </div>
+        </div>
+      </div>
+<script>
+    var canvasWidth=600;
+    var canvasHeight=600;
+    var margin = 200;
+    var tooltip = d3.select("body").append("div").attr("class", "tooltip");
+    var svg = d3.select("#NA_Tree").append("svg")
+        .attr("width",  canvasWidth)
+        .attr("height", canvasHeight)
+        var svg2 = d3.select("#EU_Tree").append("svg")
+        .attr("width",  canvasWidth)
+        .attr("height", canvasHeight)
+        var svg3 = d3.select("#JP_Tree").append("svg")
+        .attr("width",  canvasWidth)
+        .attr("height", canvasHeight)
+    var width = svg.attr("width") - margin;
+    var height = svg.attr("height") - margin;
+  //adds title of graph to chart
+    svg.append("text")
+        .attr("transform", "translate(100, 0)")
+        .attr("x", 85)
+        .attr("y", 50)
+        .attr("font-size", "24px")
+        .text("Eggnog & Buttermilk Fluid Sales 2000-2017")
+//creates scaling for x and y axis 
+    var xScale= d3.scaleLinear().range([0,width]);
+    var yScale= d3.scaleLinear().range([height,0]);
+    var yScale2= d3.scaleLinear().range([height,0]);
+    var yScale3= d3.scaleLinear().range([height,0]);
+    var games_data = [];
+    var profit_data = [];
+    var top20_data=[];
+    var container_g = svg.append("g")
+        .attr("transform",
+            "translate(" + 100 + ", " + 100 + ")");
+    var container_g2 = svg2.append("g")
+        .attr("transform",
+            "translate(" + 100 + ", " + 100 + ")");
+    var container_g3 = svg3.append("g")
+        .attr("transform",
+            "translate(" + 100 + ", " + 100 + ")");
+    d3.csv("vgsales.csv").then(data=> {
+      data.forEach(item=>{
+            games_data.push(item);
+            profit_data.push(+item.Global_Sales);
+        })
+        for(let i=0; i<20; i++){
+            var temp=d3.maxIndex(profit_data,function(d){
+                return d;
+            })
+            top20_data.push(games_data[temp]);
+            profit_data[temp]=-1;
+        }
+        console.log(top20_data)
+      //sets x axis numbers/years
+        xScale.domain([0, d3.max(top20_data,function(d){
+            return +d.Global_Sales;
+        })]);
+        yScale.domain([0, d3.max(top20_data,function(d){
+            return +d.NA_Sales;
+        })]);
+        yScale2.domain([0, d3.max(data,function(d){
+            return +d.EU_Sales;
+        })]);
+        yScale3.domain([0, d3.max(data,function(d){
+            return +d.JP_Sales;
+        })]);
+      //creates containerthe x axis
+        container_g.append("g")
+            .attr("transform", "translate(0, " + height + ")")
+            .call(d3.axisBottom(xScale).tickFormat(function(d) {
+                return d + "Mil";
+            }).ticks(10).tickSize(-height))
+            .append("text")
+            .attr("y", 50)
+            .attr("x", 250)
+            .attr("stroke", "black")
+            .text("Global Game Sales")
+
+        container_g2.append("g")
+            .attr("transform", "translate(0, " + height + ")")
+            .call(d3.axisBottom(xScale).tickFormat(function(d) {
+                return d + "Mil";
+            }).ticks(10).tickSize(-height))
+            .append("text")
+            .attr("y", 50)
+            .attr("x", 250)
+            .attr("stroke", "black")
+            .text("Global Game Sales")
+
+        container_g3.append("g")
+            .attr("transform", "translate(0, " + height + ")")
+            .call(d3.axisBottom(xScale).tickFormat(function(d) {
+                return d + "Mil";
+            }).ticks(10).tickSize(-height))
+            .append("text")
+            .attr("y", 50)
+            .attr("x", 250)
+            .attr("stroke", "black")
+            .text("Global Game Sales")
+      
+      // creates the container/ box for y axis
+        container_g.append("g")
+            .call(d3.axisLeft(yScale).tickFormat(function(d) {
+                return d + "Mil";
+            }).ticks(10).tickSize(-width))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -20)
+            .attr("x", -200)
+            .attr("dy", "-5.1em")
+            .attr("stroke", "black")
+            .text("North America Game Sales")
+        container_g2.append("g")
+            .call(d3.axisLeft(yScale2).tickFormat(function(d) {
+                return d + "Mil";
+            }).ticks(10).tickSize(-width))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -20)
+            .attr("x", -200)
+            .attr("dy", "-5.1em")
+            .attr("stroke", "black")
+            .text("Europe Game Sales")
+
+        container_g3.append("g")
+            .call(d3.axisLeft(yScale3).tickFormat(function(d) {
+                return d + "Mil";
+            }).ticks(10).tickSize(-width))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -20)
+            .attr("x", -200)
+            .attr("dy", "-5.1em")
+            .attr("stroke", "black")
+            .text("Japan Game Sales").attr("font-size","10px")
+      //creates dots for buttermilk measurements and scales them down
+        container_g.selectAll(".cir").data(top20_data).enter().append("circle").attr("class", "cir")
+            .attr("cx", function (d){
+                return xScale(d.Global_Sales)
+
+            })
+            .attr("cy", function(d){
+                return yScale(d.NA_Sales);
+            })
+            .attr("r", function(d){
+                return 4
+            }).attr("stroke", "black").attr("fill","#93CAED").on("mouseover", function(elem, data) {
+      tooltip
+              .style("visibility", "visible")
+              .html("<ul>"+"<li> Game: "+data.Name +"</li>"+"<li> North America Game Copies Sold: "+data.NA_Sales +" Million</li>"+"<li> Global Copies Sold: "+data.Global_Sales +" Million</li>"+
+                      "<li> Year Published: "+data.Year +"</li>"+"<li> Genre: "+data.Genre +"</li>"+"</ul>")
+    })
+            .on("mousemove", function(elem, data) {
+              tooltip
+                      .style("top", (event.pageY - 20) + "px")
+                      .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+              tooltip.style("visibility", "hidden");
+            })
+            
+            container_g2.selectAll("cir").data(top20_data).enter().append("circle").attr("class", "cir")
+            .attr("cx", function (d){
+                return xScale(d.Global_Sales)
+
+            })
+            .attr("cy", function(d){
+                return yScale2(d.EU_Sales);
+            })
+            .attr("r", function(d){
+                return 5
+            }).attr("stroke", "black").attr("fill","#EEEE9B").on("mouseover", function(elem, data) {
+      tooltip
+              .style("visibility", "visible")
+              .html("<ul>"+"<li> Game: "+data.Name +"</li>"+"<li> Europe Game Copies Sold: "+data.EU_Sales +" Million</li>"+"<li> Global Copies Sold: "+data.Global_Sales +" Million</li>"+
+                      "<li> Year Published: "+data.Year +"</li>"+"<li> Genre: "+data.Genre +"</li>"+"</ul>")
+    })
+            .on("mousemove", function(elem, data) {
+              tooltip
+                      .style("top", (event.pageY - 20) + "px")
+                      .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+              tooltip.style("visibility", "hidden");
+            })
+
+            container_g3.selectAll("cir").data(top20_data).enter().append("circle").attr("class", "cir")
+            .attr("cx", function (d){
+                return xScale(d.Global_Sales)
+
+            })
+            .attr("cy", function(d){
+                return yScale3(d.JP_Sales);
+            })
+            .attr("r", function(d){
+                return 5
+            })
+            .attr("stroke", "black").attr("fill", "#F47174").on("mouseover", function(elem, data) {
+      tooltip
+              .style("visibility", "visible")
+              .html("<ul>"+"<li> Game: "+data.Name +"</li>"+"<li> Japan Game Copies Sold: "+data.JP_Sales +" Million</li>"+"<li> Global Copies Sold: "+data.Global_Sales +" Million</li>"+
+                      "<li> Year Published: "+data.Year +"</li>"+"<li> Genre: "+data.Genre +"</li>"+"</ul>")
+    })
+            .on("mousemove", function(elem, data) {
+              tooltip
+                      .style("top", (event.pageY - 20) + "px")
+                      .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d) {
+              tooltip.style("visibility", "hidden");
+            })
+      //Sets color legend for given data of eggnog and buttermilk
+    })
+
+</script>
+
+</body>
+</html>
