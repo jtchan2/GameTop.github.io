@@ -68,7 +68,7 @@
             for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
         }
 
-        var cities = data.columns.slice(1).map(function(id) {
+        var genres = data.columns.slice(1).map(function(id) {
             return {
                 id: id,
                 values: data.map(function(d) {
@@ -80,11 +80,11 @@
         x.domain(d3.extent(data, function(d) { return d.date; }));
 
         y.domain([
-            d3.min(cities, function(c) { return d3.min(c.values, function(d) { return d.sales; }); }),
-            d3.max(cities, function(c) { return d3.max(c.values, function(d) { return d.sales; }); })
+            d3.min(genres, function(c) { return d3.min(c.values, function(d) { return d.sales; }); }),
+            d3.max(genres, function(c) { return d3.max(c.values, function(d) { return d.sales; }); })
         ]);
 
-        z.domain(cities.map(function(c) { return c.id; }));
+        z.domain(genres.map(function(c) { return c.id; }));
 
         const x_axis = g.append("g")
             .attr("class", "axis axis--x")
@@ -103,8 +103,8 @@
             .attr("font-size","12px")
             .text("Million Copies Sold");
 
-        var city = g.selectAll(".city")
-            .data(cities)
+        var genre = g.selectAll(".city")
+            .data(genres)
             .enter().append("svg")
             .attr("class", "city")
             .attr("id", d => d.id.substring(0, 3).toUpperCase())
@@ -116,12 +116,12 @@
             var attrs = elem.srcElement.attributes;
             let id = attrs['data-id'].value;
             console.log(id)
-            let path = city.select('#' + id);
-            let copy=cities;
+            let path = genre.select('#' + id);
+            let copy=genres;
             console.log()
-            copy.forEach(place=>{
-                let tid=place.id.substring(0, 3).toUpperCase()
-                let tpath =city.select('#' + tid)
+            copy.forEach(entry=>{
+                let tid=entry.id.substring(0, 3).toUpperCase()
+                let tpath =genre.select('#' + tid)
                 if(tid!=id){
                     tpath.style("stroke","grey")
                 }else{
@@ -134,12 +134,12 @@
         function exit(elem) {
             var attrs = elem.srcElement.attributes;
             let id = attrs['data-id'].value;
-            let path = city.select('#' + id);
+            let path = genre.select('#' + id);
 
             if (path.attr('visibility') == 'hidden') {
                 return;
             }
-            city.selectAll('.line').style('stroke', d => {
+            genre.selectAll('.line').style('stroke', d => {
                 return z(d.id)
             });
         }
@@ -148,7 +148,7 @@
             //Gets items to do event listeners on
             var attrs = elem.srcElement.attributes;
             let id = attrs['data-id'].value;
-            let path = city.select('path#' + id+".line");
+            let path = genre.select('path#' + id+".line");
             //Checks current visibility and determines wheter line needs to be visible or not
             if (path.attr("visibility") == "visible")
             {
@@ -167,7 +167,7 @@
         function zoomed(event) {
             // Add code here for zooming
             const xz = event.transform.rescaleX(x);
-            city.selectAll('.line').attr('d', function(d) { return makeLine(xz)(d.values); 							})
+            genre.selectAll('.line').attr('d', function(d) { return makeLine(xz)(d.values); 							})
             x_axis.call(xAxis, xz);
         }
 
@@ -184,7 +184,7 @@
 
 
 
-        city.append("path")
+        genre.append("path")
             .attr("class", "line")
             .attr("d", function(d) { return line(d.values); })
             .attr("id", d => d.id.substring(0, 3).toUpperCase())
@@ -194,7 +194,7 @@
             .on("mouseout", exit);
 
         svg.selectAll(".label")
-            .data(cities)
+            .data(genres)
             .enter()
             .append("text")
             .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
@@ -209,7 +209,7 @@
             .on("mouseout", exit)
             .on("click",click)
             .on("mouseover",hover)
-        console.log(cities)
+        console.log(genres)
     })
 </script>
 
