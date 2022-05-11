@@ -82,11 +82,11 @@
             .attr("height", function(d){
                 return height - yScale(+d.Global_Sales);
             }).attr("fill", "coral").on("mouseover", function(elem, data) {
-                console.log(elem)
+            console.log(elem)
             console.log(data.Name)
             tooltip
                 .style("visibility", "visible")
-                .html("<ul>"+"<li> Game: "+data.Name +"</li>"+"<li> Copies Sold: "+data.Global_Sales +" Million</li>"+
+                .html("<ul>"+"<li>"+data.Name +"</li>"+"<li> Copies Sold: "+data.Global_Sales +" Million</li>"+
                     "<li> Year Published: "+data.Year +"</li>"+"<li> Genre: "+data.Genre +"</li>"+"</ul>")
         })
             .on("mousemove", function(elem, data) {
@@ -122,7 +122,7 @@
         console.log(top10_data)
         let desc=""
         for(let i=0; i<top10_data.length;i++){
-            desc+="<li> Game: "+top10_data[i].Name+"</li>"
+            desc+="<li>"+top10_data[i].Name+"</li>"
         }
         d3.select("body").append("ol").html(desc)
 
