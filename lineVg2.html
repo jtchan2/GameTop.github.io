@@ -210,6 +210,10 @@
             .on("click",click)
             .on("mouseover",hover)
         console.log(genres)
+        svg.selectAll(".rect").data(genres).enter().append("rect").datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
+            .attr("class", "rect").attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.sales) + ")"; }).attr("x", 115)
+            .attr("y", 10).attr("width", 10).attr("height",10).attr("fill", function(d) { return z(d.id);})
+        svg.append("rect").attr("x", 70).attr("y", 500).attr("width", 10).attr("height",10).attr("fill", "blue");
     })
 </script>
 
