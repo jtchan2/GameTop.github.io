@@ -113,7 +113,7 @@
             .style("fill", "#69b3a2").on("mouseover", function(elem, data) {
       tooltip
               .style("visibility", "visible")
-              .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.Global_Sales +" Million</li>"+
+              .html("<ul>"+"<li>"+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.Global_Sales +" Million</li>"+
                       "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
     })
             .on("mousemove", function(elem, data) {
@@ -137,7 +137,7 @@
     let desc="";
     let count2=1;
     for(let i=0; i<root.leaves().length; i++){
-      desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+      desc+="<li>"+root.leaves()[i].data.Name+"</li>"
     }
     d3.select("#GL_Tree").data(root.leaves()).append("ol").html(desc)
   })
@@ -172,7 +172,7 @@
             .style("fill", "#93CAED").on("mouseover", function(elem, data) {
       tooltip
               .style("visibility", "visible")
-              .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.NA_Sales +" Million</li>"+
+              .html("<ul>"+"<li>"+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.NA_Sales +" Million</li>"+
                       "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
     })
             .on("mousemove", function(elem, data) {
@@ -198,7 +198,7 @@
     let desc="";
     let count2=1;
     for(let i=0; i<root.leaves().length; i++){
-      desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+      desc+="<li>"+root.leaves()[i].data.Name+"</li>"
     }
     d3.select("#NA_Tree").data(root.leaves()).append("ol").html(desc)
   })
@@ -234,7 +234,7 @@
             .style("fill", "#EEEE9B").on("mouseover", function(elem, data) {
       tooltip
               .style("visibility", "visible")
-              .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.EU_Sales +" Million</li>"+
+              .html("<ul>"+"<li>"+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.EU_Sales +" Million</li>"+
                       "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
     })
             .on("mousemove", function(elem, data) {
@@ -260,7 +260,7 @@
     let desc="";
     let count2=1;
     for(let i=0; i<root.leaves().length; i++){
-      desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+      desc+="<li>"+root.leaves()[i].data.Name+"</li>"
     }
     d3.select("#EU_Tree").data(root.leaves()).append("ol").html(desc)
   })
@@ -296,7 +296,7 @@
             .style("fill", "#F47174").on("mouseover", function(elem, data) {
       tooltip
               .style("visibility", "visible")
-              .html("<ul>"+"<li> Game: "+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.JP_Sales +" Million</li>"+
+              .html("<ul>"+"<li> "+data.data.Name +"</li>"+"<li> Copies Sold: "+data.data.JP_Sales +" Million</li>"+
                       "<li> Year Published: "+data.data.Year +"</li>"+"<li> Genre: "+data.data.Genre +"</li>"+"</ul>")
     })
             .on("mousemove", function(elem, data) {
@@ -322,7 +322,7 @@
     let desc="";
     let count2=1;
     for(let i=0; i<root.leaves().length; i++){
-      desc+="<li> Game:"+root.leaves()[i].data.Name+"</li>"
+      desc+="<li>"+root.leaves()[i].data.Name+"</li>"
     }
     d3.select("#JP_Tree").data(root.leaves()).append("ol").html(desc)
   })
