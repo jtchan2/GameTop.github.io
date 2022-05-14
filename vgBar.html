@@ -101,7 +101,7 @@
         container_g.append("g")
             .attr("transform", "translate(0, " + height + ")")
             .call(d3.axisBottom(xScale).tickFormat(function(d){
-                return count+". "+d.substring(0, 3).toUpperCase();
+                return (count++)+". "+d.substring(0, 3).toUpperCase();
             }))
             .append("text")
             .attr("y", 50)
